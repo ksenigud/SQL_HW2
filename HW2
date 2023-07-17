@@ -1,0 +1,62 @@
+CREATE DATABASE homework__2;
+USE homework__2;
+
+CREATE TABLE sales
+(
+	id int not null  primary key,
+	order_date date not null,
+    count_sales int not null
+);
+    
+INSERT INTO sales(order_date, count_sales)
+VALUES
+	('2022-01-01', 126),
+	('2022-01-02', 179),
+	('2022-01-03', 124),
+	('2022-01-04', 19),
+	('2022-01-05', 276);
+select * from sales
+
+
+SELECT 
+	id,
+    CASE
+		WHEN count_sales < 100 THEN "Маленький заказ"
+        WHEN count_sales BETWEEN 100 AND 300 THEN "Средний заказ"
+        ELSE "Большой заказ"
+    END AS "bucket"
+FROM sales;
+
+select * from sales
+
+CREATE TABLE IF NOT EXISTS orders
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    employee_id VARCHAR(20),
+    amount FLOAT DEFAULT 0.0,
+	order_status VARCHAR(20)
+);
+
+INSERT INTO orders (employee_id, amount, order_status)
+VALUES
+('e03', 15.00, "OPEN"),
+('e01', 25.50, "OPEN"),
+('e05', 100.70, "CLOSED"),
+('e02', 22.18, "OPEN"),
+('e04', 9.50, "CANCELLED");
+
+SELECT
+	id,
+    employee_id,
+    amount,
+    order_status,
+	CASE
+		WHEN order_status = "OPEN" THEN "Order is in open state"
+        WHEN order_status = "CLOSED" THEN "Order is closed"
+        WHEN order_status = "CANCELLED" THEN "Order is cancelled"
+        ELSE ""
+    END AS full_order_status
+FROM orders;
+
+
+#Null- значение пусто (текстовый формат), 0 - цифра(числовой тип данных)
